@@ -2,9 +2,9 @@ import { toChildArray } from "../virtualNode";
 import { getDomSibling } from "../component";
 import { removeNode } from "../DOM";
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "../internal";
-
-import { diff } from "./";
+import { tick } from "./";
 import { unMount, applyReference } from "./utils";
+import { childrenInsert } from "./childrenInsert";
 
 export function diffChildren(
   parent_dom,
@@ -72,7 +72,7 @@ export function diffChildren(
 
         old_child = old_child || EMPTY_OBJECT;
 
-        new_dom = diff(
+        new_dom = tick(
           parent_dom,
           new_child,
           old_child,
@@ -103,28 +103,7 @@ export function diffChildren(
             new_dom != old_dom ||
             new_dom.parentNode == null
           ) {
-            block: {
-              if (old_dom == null || old_dom.parentNode !== parent_dom) {
-                parent_dom.appendChild(new_dom);
-              } else {
-                sibling_dom = old_dom;
-                for (
-                  j = 0;
-                  (sibling_dom = sibling_dom.nextSibling) &&
-                  j < old_children_length;
-                  j++
-                ) {
-                  if (sibling_dom == new_dom) {
-                    break block;
-                  }
-                }
-                parent_dom.insertBefore(new_dom, old_dom);
-              }
-            }
-
-            // if (new_parent_virtual_node.type == "option") {
-            // 	parent_dom.value = ""
-            // }
+            childrenInsert(parent_dom, new_dom, old_dom, old_children_length);
           }
 
           old_dom = new_dom.nextSibling;

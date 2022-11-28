@@ -1,4 +1,4 @@
-import { diff } from "./diff";
+import { tick } from "./diff";
 import { assign } from "./internal";
 import { commitRoot } from "./diff/utils";
 
@@ -64,7 +64,7 @@ export class Component {
 
       const mounts = [];
 
-      const new_dom = diff(
+      const new_dom = tick(
         parent_dom,
         virtual_node,
         old_virtual_node,
@@ -130,18 +130,19 @@ export function updateParentDomPointers(virtual_node) {
  * @function queueRender
  * @param {*} component
  */
-const _queue = [];
+const renderQueue = [];
 
 export function queueRender(component) {
   if (!component.$dirty) component.$dirty = true;
 
-  if (_queue.push(component) === 1) Promise.resolve().then(flushRenderQueue);
+  if (renderQueue.push(component) === 1)
+    Promise.resolve().then(flushRenderQueue);
 }
 
 export function flushRenderQueue() {
+  renderQueue.sort((a, b) => b.$virtual_node.$depth - a.$virtual_node.$depth);
   let flush;
-  _queue.sort((a, b) => b.$virtual_node.$depth - a.$virtual_node.$depth);
-  while ((flush = _queue.pop())) {
+  while ((flush = renderQueue.pop())) {
     if (flush.$dirty) flush.forceUpdate();
   }
 }

@@ -12,9 +12,9 @@ export function diffNodes(
   excess_dom_children,
   mounts
 ) {
-  let i,
-    old_props = old_virtual_node.props,
-    new_props = new_virtual_node.props;
+  let i;
+  let old_props = old_virtual_node.props;
+  let new_props = new_virtual_node.props;
 
   is_svg = new_virtual_node.type === "svg" || is_svg;
 
@@ -57,23 +57,12 @@ export function diffNodes(
       dom.data = new_props;
     }
   } else if (new_virtual_node !== old_virtual_node) {
-    // if (excess_dom_children != null) {
-    // 	const what = EMPTY_ARRAY.slice.call(dom.childNodes);
-    // 	console.log(what);
-    // 	excess_dom_children = what;
-    // }
-
     old_props = old_virtual_node.props || EMPTY_OBJECT;
-
-    // Let people set innerHTML
-    // let old_html; // TODO
-    // let new_html; // TODO
 
     diffProps(dom, new_props, old_props, is_svg);
 
     new_virtual_node.$children = new_virtual_node.props.children;
 
-    // if (!new_html) {
     diffChildren(
       dom,
       new_virtual_node,

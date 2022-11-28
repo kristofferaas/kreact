@@ -10,7 +10,6 @@ export function applyReference(ref, value) {
 
 export function unMount(virtual_node, parent_virtual_node, skip) {
   let ref;
-  // if (options.unMount) options.unMount(virtual_node)
 
   if ((ref = virtual_node.ref)) {
     applyReference(ref, null, parent_virtual_node);

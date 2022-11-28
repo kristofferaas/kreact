@@ -1,5 +1,4 @@
-/* eslint-disable camelcase */
-import { diff } from "./diff";
+import { tick } from "./diff";
 import { createElement } from "./createElement";
 import { EMPTY_OBJECT } from "./internal";
 import { commitRoot } from "./diff/utils";
@@ -11,7 +10,7 @@ export function render(virtual_node, parent_dom) {
   const mounts = [];
 
   parent_dom.$children = virtual_node;
-  diff(
+  tick(
     parent_dom,
     parent_dom.$children,
     old_virtual_node || EMPTY_OBJECT,

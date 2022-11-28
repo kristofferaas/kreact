@@ -17,7 +17,7 @@ export default class PureComponent extends Component {
   /**
    * shouldComponentUpdate
    *
-   * This method is called by the @/lib/render diffing algorithm.
+   * This method is called by the kreact diffing algorithm.
    * You can implement this method yourself in your own component,
    * but 9 time out of 10 you'll do exactly this.
    */
