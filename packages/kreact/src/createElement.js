@@ -12,28 +12,28 @@ import { assign } from "./internal";
  * @param {*} [children]
  */
 export function createElement(type, attributes, children) {
-	const props = assign({}, attributes);
+  const props = assign({}, attributes);
 
-	if (arguments.length > 3) {
-		children = [children];
-		for (let i = 3; i < arguments.length; i++) {
-			children.push(arguments[i]);
-		}
-	}
+  if (arguments.length > 3) {
+    children = [children];
+    for (let i = 3; i < arguments.length; i++) {
+      children.push(arguments[i]);
+    }
+  }
 
-	if (children != null) {
-		props.children = children;
-	}
+  if (children != null) {
+    props.children = children;
+  }
 
-	const ref = props.ref;
-	if (ref != null) delete props.ref;
+  const ref = props.ref;
+  if (ref != null) delete props.ref;
 
-	const key = props.key;
-	if (key != null) delete props.key;
+  const key = props.key;
+  if (key != null) delete props.key;
 
-	return createVirtualNode(type, props, key, ref);
+  return createVirtualNode(type, props, key, ref);
 }
 
 export function createReference() {
-	return {};
+  return {};
 }

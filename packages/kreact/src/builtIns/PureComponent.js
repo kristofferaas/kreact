@@ -1,4 +1,4 @@
-import { Component } from "../render";
+import { Component } from "../component";
 import { shallowEquals } from "../internal";
 
 /**
@@ -14,18 +14,18 @@ import { shallowEquals } from "../internal";
  * and it won't update.
  */
 export default class PureComponent extends Component {
-	/**
-	 * shouldComponentUpdate
-	 *
-	 * This method is called by the @/lib/render diffing algorithm.
-	 * You can implement this method yourself in your own component,
-	 * but 9 time out of 10 you'll do exactly this.
-	 */
-	shouldComponentUpdate(nextProps, nextState) {
-		const update =
-			!shallowEquals(this.props, nextProps) ||
-			!shallowEquals(this.state, nextState);
-		// console.log(`should ${this.constructor.name} update?`, update);
-		return update;
-	}
+  /**
+   * shouldComponentUpdate
+   *
+   * This method is called by the @/lib/render diffing algorithm.
+   * You can implement this method yourself in your own component,
+   * but 9 time out of 10 you'll do exactly this.
+   */
+  shouldComponentUpdate(nextProps, nextState) {
+    const update =
+      !shallowEquals(this.props, nextProps) ||
+      !shallowEquals(this.state, nextState);
+    // console.log(`should ${this.constructor.name} update?`, update);
+    return update;
+  }
 }

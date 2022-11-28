@@ -1,6 +1,6 @@
 import { setProperty } from "../DOM";
 
-export function diffProps(dom, new_props, old_props, is_svg, is_hydrating) {
+export function diffProps(dom, new_props, old_props, is_svg) {
   let i;
 
   for (i in old_props) {
@@ -11,13 +11,6 @@ export function diffProps(dom, new_props, old_props, is_svg, is_hydrating) {
   }
 
   for (i in new_props) {
-    if (
-      (!is_hydrating || typeof new_props[i] === "function") &&
-      // i !== "value" &&
-      // i !== "checked" &&
-      old_props[i] !== new_props[i]
-    ) {
-      setProperty(dom, i, new_props[i], old_props[i], is_svg);
-    }
+    setProperty(dom, i, new_props[i], old_props[i], is_svg);
   }
 }
